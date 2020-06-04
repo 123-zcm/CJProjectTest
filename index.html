@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--单标签-->
+    <!--H5适配-->
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>081417204 张春明</title>
+    <!--用来加载外部资源用的标签-->
+    <link rel="short icon" href="Resource/icon.png">
+    <link rel="stylesheet" href="ExtermalStyle.css">
+    <style>
+        .i_head_div{
+            text-align: center;
+            margin-top: 50px;
+        }
+        .i_inner_div{
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            width: 90%;
+            margin: 0 auto;
+            background:white;
+            height:100px;
+            margin-top:30px;
+        }
+        .i_inner_div div{
+            height:50px;
+        }
+        .i_inner_div div span{
+            padding-left:15px ;
+            font-size:20px;
+            line-height:50px;
+        }
+        .i_login_div{
+            height: 50px;
+            background:rgb(30,92,161);
+            width:90%;
+            margin: 0 auto;
+            border-radius:10px;
+            margin-top: 20px;
+
+
+        }
+        .i_login_div input{
+            font-size:20px;
+            color:white;
+            line-height:50px;
+            padding-left: 120px;
+        }
+        input{outline:medium; background-color: transparent; border:0}
+
+    </style>
+
+</head>
+<body>
+
+
+
+
+
+
+
+    <!--第一部分-->
+    <header>
+        <span>登录</span>
+    </header>
+
+<!--第二部分-->
+    <div class="i_head_div">
+        <img src="Resource/head.png" alt="">
+    </div>
+
+    <!--第三部分-->
+    <form action="" class="">
+        <div class="i_inner_div">
+            <div >
+                <span>账户名：</span>
+                <!--<br>自动换行-->
+                <input id="i_account" type="text" value="admin"> <br>
+            </div>
+            <div>
+                <span>密码：</span>
+                <input id="i_pwd" type="password" value="admin"> <br>
+            </div>
+        </div>
+        <div class="i_login_div">
+            <input id="i_btn" type="button" value="登录">
+        </div>
+    </form>
+    <script>
+        // <!--普通定义函数的方式-->
+        // function sum(a,b){
+        //     var c=a+b;
+        //     alert("普通函数调用到勒")
+        //     return c;
+        // }
+        //
+        // // 变量名定义函数的方式
+        // var sum1 = function(a,b){
+        //     var c =a+b;
+        //     alert("变量定义函数调用到了");
+        //     return  c;
+        // }
+
+        // var btn = document.getElementById("i_btn");
+        // btn.onclick = function(a,b){
+        //     var c =a+b;
+        //     alert("变量定义函数调用到了");
+        //     return c;
+        // }
+        var btn=document.getElementById("i_btn");
+        btn.onclick=function() {
+            var userName = encodeURIComponent(document.getElementById("i_account").value);
+            var pwd = encodeURIComponent(document.getElementById("i_pwd").value);
+
+            //第一步：创建网络请求对象（http）去服务端要数据，接受服务端数据
+            var xhr = new XMLHttpRequest();
+
+            // 第二步：与服务器端简历连接（get/post）,请求方式以及连接哪个服务器，用连接哪个接口
+            xhr.open('post', 'https://mockapi.eolinker.com/2ZhGVxjacb39010e6753bd9c02ee803e6e3bfeab6e8007c/login');
+            //设置请求头，告诉服务器我们传递过去的数据是以表单的形式传递过去的
+            xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+
+            //第三步：向服务器发送请求，传递参数
+            var par = "username=" + userName + "&pwd=" + pwd;
+            xhr.send(par);
+
+            //第四步：接受服务器返回的数据
+            xhr.onreadystatechange = function () {
+                //xhr.readyState ==4 代表数据请求完成
+                //xhr.status ==200 代表数据成功返回
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // var responseData = xhr.responseText;
+                    //responseText里面包含了服务器端返回的数据
+                    var responseData = JSON.parse(xhr.responseText);
+                    var str = responseData.data;
+                    if (str == "登录成功") {
+                        location.href = "DropletService.html";
+                    } else {
+                        alert(str);
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

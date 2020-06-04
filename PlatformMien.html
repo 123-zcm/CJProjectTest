@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--单标签-->
+    <!--H5适配-->
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>081417204张春明</title>
+    <!--用来加载外部资源用的标签-->
+    <link rel="short icon" href="Resource/icon.png">
+    <link rel="stylesheet" href="ExtermalStyle.css">
+    <style>
+        article{
+            margin:20px;
+        }
+        h3{
+            color:red;
+            font-size:18px;
+            padding-bottom:10px;
+            /*设置横线*/
+            border-bottom:2px solid #dddddd;
+        }
+        h4{
+            font-size:14px;
+        }
+        p{
+            font-size:12px;
+            /*首行缩进*/
+            text-indent:2em;
+            line-height:20px;
+        }
+    </style>
+</head>
+<body>
+<!--第一部分-->
+<!--span少量文字标签-->
+<header>
+    <span>平台风采</span>
+</header>
+<!--第二部分-->
+<section class="DS_second_section">
+    <img src="Resource/banner-1.png" alt="请查看网络">
+</section>
+
+<!--第三部分-->
+<article>
+    <h3>公司简介</h3>
+    <h4>华杉有限公司</h4>
+    <p>华杉科技（北京）有限公司一直秉承“在高薪和经验的路上，我们只做行业第一”　,致力于为整个互联网科技行业输送高级技术人才、做好每一款外包项目。</p>
+    <p>华杉科技（北京）有限公司是一家既专注于培养高级IT技术人才，为学员提供定制化IT职业规划方案及意见咨询服务，又是国内领先的智能手机软件外包服务商。公司由原东方爱智技术总监，原58同城技术总监，河南大学软件学院优秀毕业生共同创立。</p>
+    <p>华杉科技（北京）有限公司拥有业内知名的教研团队和雄厚的课程研发能力，课程的快速迭代时刻紧跟当今较为流行的前沿技术、不同行业的外包项目作为支撑，强有力的保证了学员的核心竞争力。强竞争力的一线技术人员和完善的外包服务流程充分保证了每一款项目的顺利执行。</p>
+</article>
+
+<!--第四部分 a标签支持点击-->
+<!--h5里面新增的语义化标签,它没有特殊的意义,仅是用来增强程序的可读性-->
+<footer>
+    <a href="DropletService.html"> <img src="Resource/nav10.png" alt=""> <span >小滴服务</span> </a>
+    <a href="BusinessProject.html"> <img src="Resource/nav20.png" alt=""> <span>企业项目</span> </a>
+    <a href="ServiceProcess.html"> <img src="Resource/nav30.png" alt=""> <span>服务流程</span> </a>
+    <a href="PlatformMien.html"> <img src="Resource/nav41.png" alt=""> <span style="color: red">平台风采</span> </a>
+    <a href="MydropLet.html"> <img src="Resource/nav50.png" alt=""> <span>我的小滴</span> </a>
+</footer>
+
+<script>
+    //定义公共部分的函数
+    function assgin(obj) {
+        var title_tag=document.getElementById("title")
+        var subTitle_tag=document.getElementById("subTitle")
+        var info_tag=document.getElementById("info");
+        title_tag.innerHTML=obj.title;
+        subTitle_tag.innerHTML=obj.subTitle
+        info_tag.innerHTML=obj.info;
+    }
+    //删除缓存中内容用：localStorage.remove
+    var obj_text=JSON.parse(localStorage.getItem("platform_json"));
+    if(obj_text){
+        var obj=obj_text.data
+        assgin(obj)
+    }else{
+        //建立网络请求
+        var xhr=new XMLHttpRequest();
+        //建立连接
+        xhr.open('get','https://mockapi.eolinker.com/2ZhGVxjacb39010e6753bd9c02ee803e6e3bfeab6e8007c/aboutus');
+        //设置请求头
+        xhr.setRequestHeader("content-type","application/x-www-form-urlencoded")
+        //传递参数
+        xhr.send();
+        //获取返回值
+        xhr.onreadystatechange=function (ev) {
+            if (xhr.readyState==4 && xhr.status==200){
+                //解析数据
+                var responseData= JSON.parse(xhr.responseText)
+                var obj=responseData.data;
+                window.localStorage.setItem("platform_json",xhr.responseText)
+                //window.localStorage.setItem("platform_obj",obj);这是存储的是对象
+                assgin(obj)
+
+            }
+        }
+    }
+</script>
+</body>
+</html>
